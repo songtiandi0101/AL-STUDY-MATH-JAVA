@@ -2,6 +2,8 @@ package com.math.alstudymathjava.system.service.impl;
 
 
 
+import com.math.alstudymathjava.system.entity.user.PageResult;
+import com.math.alstudymathjava.system.entity.user.SysUser;
 import com.math.alstudymathjava.system.mapper.SysRoleMapper;
 import com.math.alstudymathjava.system.entity.user.SysRole;
 import com.math.alstudymathjava.system.service.SysRoleService;
@@ -29,9 +31,25 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysRoleMapper.selectById(id);
     }
 
+
+    // 新增分页实现
     @Override
-    public List<SysRole> getRoleList(SysRole query) {
-        return sysRoleMapper.selectList(query);
+    public PageResult<SysRole> getRolePageList(SysRole query) {
+        Integer pageNum = query.getPageNum();
+        Integer pageSize = query.getPageSize();
+        // 计算起始下标
+        int start = (pageNum - 1) * pageSize;
+        query.setStart(start);
+
+        PageResult<SysRole> pageResult = new PageResult<>();
+        // 查询当前页数据
+        List<SysRole> records = sysRoleMapper.selectPage(query);
+        // 查询总条数
+        long total = sysRoleMapper.countPage(query);
+
+        pageResult.setRecords(records);
+        pageResult.setTotal(total);
+        return pageResult;
     }
 
     @Override

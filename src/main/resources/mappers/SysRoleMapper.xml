@@ -38,4 +38,31 @@
     <update id="deleteById">
         UPDATE sys_role SET del_flag=1 WHERE id = #{id}
     </update>
+    <!-- 分页查询用户列表 -->
+    <select id="selectPage" resultType="com.math.alstudymathjava.system.entity.user.SysRole">
+        select id,role_code roleCode,role_name roleName,del_flag delFlag,create_time createTime,update_time updateTime
+        from sys_role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                AND role_name like concat('%',#{roleName},'%')
+            </if>
+            <if test="roleCode != null and roleCode != ''">
+                AND role_code like concat('%',#{roleCode},'%')
+            </if>
+            and del_flag = 0
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+    <!-- 分页统计总记录数 -->
+    <select id="countPage" resultType="long">
+        select count(*)
+        from sys_role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                AND role_name like concat('%',#{roleName},'%')
+            </if>
+            and del_flag = 0
+        </where>
+    </select>
+
 </mapper>

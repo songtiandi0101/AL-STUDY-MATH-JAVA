@@ -1,8 +1,10 @@
 package com.math.alstudymathjava.system.controller;
 
 
+import com.math.alstudymathjava.system.entity.user.PageResult;
 import com.math.alstudymathjava.system.entity.user.SysRole;
 
+import com.math.alstudymathjava.system.entity.user.SysUser;
 import com.math.alstudymathjava.system.service.SysRoleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +28,11 @@ public class SysRoleController {
         return sysRoleService.getRoleById(id);
     }
 
+
+    // 修改：返回分页PageResult，调用分页方法
     @GetMapping("/list")
-    public List<SysRole> list(SysRole query) {
-        return sysRoleService.getRoleList(query);
+    public PageResult<SysRole> list(SysRole query) {
+        return sysRoleService.getRolePageList(query);
     }
 
     @PutMapping("/update")

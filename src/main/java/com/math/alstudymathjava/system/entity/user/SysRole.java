@@ -12,4 +12,19 @@ public class SysRole {
     private Integer delFlag;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    /**
+     * 当前页码
+     */
+    private Integer pageNum;
+
+    /**
+     * 每页显示条数
+     */
+    private Integer pageSize;
+
+    /**
+     * limit起始偏移量，(pageNum-1)*pageSize，数据库无此字段
+     */
+    private Integer start;
+
 }
