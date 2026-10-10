@@ -1,9 +1,7 @@
 package com.math.alstudymathjava.system.controller;
 
-
 import com.math.alstudymathjava.system.entity.user.PageResult;
 import com.math.alstudymathjava.system.entity.user.SysRole;
-
 import com.math.alstudymathjava.system.entity.user.SysUser;
 import com.math.alstudymathjava.system.service.SysRoleService;
 import jakarta.annotation.Resource;
@@ -28,11 +26,19 @@ public class SysRoleController {
         return sysRoleService.getRoleById(id);
     }
 
-
-    // 修改：返回分页PageResult，调用分页方法
+    // 分页查询（管理页面用）
     @GetMapping("/list")
     public PageResult<SysRole> list(SysRole query) {
         return sysRoleService.getRolePageList(query);
+    }
+
+    /**
+     * ⭐ 新增：查询所有角色（下拉框用，不分页）
+     * 接口地址：GET /sys/role/all
+     */
+    @GetMapping("/all")
+    public List<SysRole> all() {
+        return sysRoleService.getAllRoles();
     }
 
     @PutMapping("/update")

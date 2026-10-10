@@ -29,6 +29,14 @@
         </if>
     </select>
 
+    <!-- ⭐ 新增：查询所有角色（下拉框用，不分页） -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT id, role_code, role_name, del_flag, create_time, update_time
+        FROM sys_role
+        WHERE del_flag = 0
+        ORDER BY id ASC
+    </select>
+
     <update id="update">
         UPDATE sys_role
         SET role_code=#{roleCode},role_name=#{roleName},update_time=#{updateTime}
@@ -38,7 +46,8 @@
     <update id="deleteById">
         UPDATE sys_role SET del_flag=1 WHERE id = #{id}
     </update>
-    <!-- 分页查询用户列表 -->
+
+    <!-- 分页查询角色列表 -->
     <select id="selectPage" resultType="com.math.alstudymathjava.system.entity.user.SysRole">
         select id,role_code roleCode,role_name roleName,del_flag delFlag,create_time createTime,update_time updateTime
         from sys_role
@@ -53,6 +62,7 @@
         </where>
         limit #{start},#{pageSize}
     </select>
+
     <!-- 分页统计总记录数 -->
     <select id="countPage" resultType="long">
         select count(*)

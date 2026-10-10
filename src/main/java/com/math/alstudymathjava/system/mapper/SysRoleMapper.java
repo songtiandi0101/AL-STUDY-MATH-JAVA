@@ -27,4 +27,6 @@ public interface SysRoleMapper {
      * @return 总记录数
      */
     long countPage(SysRole query);
+
+    List<SysRole> selectAll();
 }

@@ -62,5 +62,10 @@ public class SysRoleServiceImpl implements SysRoleService {
     public int deleteRole(Long id) {
         return sysRoleMapper.deleteById(id);
     }
+
+    @Override
+    public List<SysRole> getAllRoles() {
+        return sysRoleMapper.selectAll();
+    }
 }
 

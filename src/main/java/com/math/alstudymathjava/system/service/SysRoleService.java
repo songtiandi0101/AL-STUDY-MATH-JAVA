@@ -17,4 +17,5 @@ public interface SysRoleService {
     int deleteRole(Long id);
     // 新增分页查询方法
     PageResult<SysRole> getRolePageList(SysRole query);
+    List<SysRole> getAllRoles();
 }
