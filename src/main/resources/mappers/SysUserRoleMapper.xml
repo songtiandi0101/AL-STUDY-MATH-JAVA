@@ -20,4 +20,14 @@
     <delete id="deleteById">
         DELETE FROM sys_user_role WHERE id = #{id}
     </delete>
+
+    <!-- ⭐ 新增：按用户ID查询角色ID列表（用于编辑回显） -->
+    <select id="selectRoleIdsByUserId" resultType="java.lang.Long">
+        SELECT role_id FROM sys_user_role WHERE user_id = #{userId}
+    </select>
+
+    <!-- ⭐ 改：按用户ID删除（业务需要，删某用户全部角色） -->
+    <delete id="deleteByUserId">
+        DELETE FROM sys_user_role WHERE user_id = #{userId}
+    </delete>
 </mapper>

@@ -47,8 +47,9 @@ public class SysUserController {
         return rows > 0 ? "success" : "fail";
     }
 
+
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable("id") Long id) {     // ⭐ 加上 ("id")
         int rows = sysUserService.deleteUser(id);
         return rows > 0 ? "success" : "fail";
     }

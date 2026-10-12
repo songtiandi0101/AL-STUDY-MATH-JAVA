@@ -1,8 +1,8 @@
 package com.math.alstudymathjava.system.entity.user;
 
-
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class SysUser {
@@ -71,4 +71,10 @@ public class SysUser {
      * limit起始偏移量，(pageNum-1)*pageSize，数据库无此字段
      */
     private Integer start;
+
+    // ========== ⭐ 新增：角色ID列表（数据库无对应字段，仅用于前端多选回显与保存）==========
+    /**
+     * 用户拥有的角色ID列表
+     */
+    private List<Long> roleIds;
 }
