@@ -5,6 +5,8 @@ import com.math.alstudymathjava.system.mapper.SysMenuMapper;
 import com.math.alstudymathjava.system.service.SysMenuService;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,10 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public int addMenu(SysMenu sysMenu) {
+        LocalDateTime now = LocalDateTime.now();
+        sysMenu.setCreateTime(now);
+        sysMenu.setUpdateTime(now);
+        sysMenu.setDelFlag(0);
         return sysMenuMapper.insert(sysMenu);
     }
 
