@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.math.alstudymathjava.system.mapper.MathQuestionKpRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.math.alstudymathjava.system.entity.math.MathQuestionKpRelation">
+        <id column="id" property="id"/>
+        <result column="question_id" property="questionId"/>
+        <result column="kp_id" property="kpId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, question_id, kp_id
+    </sql>
+
+    <!-- 批量插入题目-知识点关联 -->
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO math_question_kp_relation (question_id,kp_id)
+        VALUES
+        <foreach collection="kpIds" item="kpId" separator=",">
+            (#{questionId},#{kpId})
+        </foreach>
+    </insert>
+
+    <!-- 根据题目ID删除所有关联 -->
+    <delete id="deleteByQuestionId">
+        DELETE FROM math_question_kp_relation WHERE question_id = #{questionId}
+    </delete>
+
+    <!-- 根据知识点ID删除所有关联 -->
+    <delete id="deleteByKpId">
+        DELETE FROM math_question_kp_relation WHERE kp_id = #{kpId}
+    </delete>
+
+    <!-- 根据题目ID查询关联的知识点ID列表 -->
+    <select id="selectKpIdsByQuestionId" resultType="java.lang.Long">
+        SELECT kp_id FROM math_question_kp_relation
+        WHERE question_id = #{questionId}
+        ORDER BY kp_id ASC
+    </select>
+
+    <!-- 根据知识点ID统计关联的题目数量 -->
+    <select id="countQuestionsByKpId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM math_question_kp_relation
+        WHERE kp_id = #{kpId}
+    </select>
+
+</mapper>

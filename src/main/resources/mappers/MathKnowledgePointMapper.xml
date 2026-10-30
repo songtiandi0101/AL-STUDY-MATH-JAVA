@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.math.alstudymathjava.system.mapper.MathKnowledgePointMapper">
+
+    <resultMap id="BaseResultMap" type="com.math.alstudymathjava.system.entity.math.MathKnowledgePoint">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="level" property="level"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="create_time" property="createTime"/>
+        <!-- children 为树形结构字段，数据库无对应列，不映射 -->
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, parent_id, name, level, sort_order, create_time
+    </sql>
+
+    <!-- 新增知识点 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO math_knowledge_point
+        (
+            parent_id,
+            name,
+            level,
+            sort_order,
+            create_time
+        )
+        VALUES
+            (
+                #{parentId},
+                #{name},
+                #{level},
+                #{sortOrder},
+                #{createTime}
+            )
+    </insert>
+
+    <!-- 更新知识点 -->
+    <update id="update">
+        UPDATE math_knowledge_point
+        SET parent_id   = #{parentId},
+            name        = #{name},
+            level       = #{level},
+            sort_order  = #{sortOrder}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID删除知识点（物理删除） -->
+    <delete id="deleteById">
+        DELETE FROM math_knowledge_point
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 根据ID查询知识点 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM math_knowledge_point
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有知识点，用于构建树 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM math_knowledge_point
+        ORDER BY parent_id ASC, sort_order ASC, id ASC
+    </select>
+
+    <!-- 根据父ID查询子知识点 -->
+    <select id="selectByParentId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM math_knowledge_point
+        WHERE parent_id = #{parentId}
+        ORDER BY sort_order ASC, id ASC
+    </select>
+
+    <!-- 根据题目ID查询关联的知识点 -->
+    <select id="selectKpsByQuestionId" resultMap="BaseResultMap">
+        SELECT
+            kp.id,
+            kp.parent_id,
+            kp.name,
+            kp.level,
+            kp.sort_order,
+            kp.create_time
+        FROM math_knowledge_point kp
+                 INNER JOIN math_question_kp_relation r
+                            ON kp.id = r.kp_id
+        WHERE r.question_id = #{questionId}
+        ORDER BY kp.sort_order ASC, kp.id ASC
+    </select>
+
+    <!-- 新增题目-知识点关联关系 -->
+    <insert id="insertQuestionKpRelation">
+        INSERT INTO math_question_kp_relation
+        (
+            question_id,
+            kp_id
+        )
+        VALUES
+            (
+                #{questionId},
+                #{kpId}
+            )
+    </insert>
+
+    <!-- 删除某题目的所有知识点关联关系 -->
+    <delete id="deleteQuestionKpRelationByQuestionId">
+        DELETE FROM math_question_kp_relation
+        WHERE question_id = #{questionId}
+    </delete>
+
+</mapper>
