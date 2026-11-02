@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.math.alstudymathjava.system.mapper.MathQuestionMapper">
+
+    <resultMap id="BaseResultMap" type="com.math.alstudymathjava.system.entity.math.MathQuestion">
+        <id column="id" property="id"/>
+        <result column="question_type" property="questionType"/>
+        <result column="grade" property="grade"/>
+        <result column="difficulty" property="difficulty"/>
+        <result column="has_image" property="hasImage"/>
+        <result column="image_path" property="imagePath"/>
+        <result column="content" property="content"/>
+        <result column="answer" property="answer"/>
+        <result column="analysis" property="analysis"/>
+        <result column="source" property="source"/>
+        <result column="is_published" property="isPublished"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <!-- options、kpIds、knowledgePoints、pageNum、pageSize、start 为业务字段，数据库无对应列，不映射 -->
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, question_type, grade, difficulty, has_image, image_path,
+        content, answer, analysis, source, is_published, create_time, update_time
+    </sql>
+
+    <!-- 新增题目 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO math_question
+        (
+            question_type,
+            grade,
+            difficulty,
+            has_image,
+            image_path,
+            content,
+            answer,
+            analysis,
+            source,
+            is_published,
+            create_time,
+            update_time
+        )
+        VALUES
+            (
+                #{questionType},
+                #{grade},
+                #{difficulty},
+                #{hasImage},
+                #{imagePath},
+                #{content},
+                #{answer},
+                #{analysis},
+                #{source},
+                #{isPublished},
+                #{createTime},
+                #{updateTime}
+            )
+    </insert>
+
+    <!-- 更新题目 -->
+    <update id="update">
+        UPDATE math_question
+        <set>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="difficulty != null">difficulty = #{difficulty},</if>
+            <if test="hasImage != null">has_image = #{hasImage},</if>
+            <if test="imagePath != null">image_path = #{imagePath},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="answer != null">answer = #{answer},</if>
+            <if test="analysis != null">analysis = #{analysis},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="isPublished != null">is_published = #{isPublished},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID删除 -->
+    <delete id="deleteById">
+        DELETE FROM math_question WHERE id = #{id}
+    </delete>
+
+    <!-- 根据ID列表批量删除 -->
+    <delete id="deleteBatchByIds">
+        DELETE FROM math_question
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM math_question
+        WHERE id = #{id}
+    </select>
+
+    <!-- 分页查询题目列表 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM math_question
+        <where>
+            <if test="questionType != null">AND question_type = #{questionType}</if>
+            <if test="grade != null and grade != ''">AND grade = #{grade}</if>
+            <if test="difficulty != null">AND difficulty = #{difficulty}</if>
+            <if test="hasImage != null">AND has_image = #{hasImage}</if>
+            <if test="isPublished != null">AND is_published = #{isPublished}</if>
+            <if test="source != null and source != ''">AND source = #{source}</if>
+            <if test="content != null and content != ''">
+                AND content LIKE CONCAT('%', #{content}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+        LIMIT #{start}, #{pageSize}
+    </select>
+
+    <!-- 统计分页查询的题目总数 -->
+    <select id="countPage" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM math_question
+        <where>
+            <if test="questionType != null">AND question_type = #{questionType}</if>
+            <if test="grade != null and grade != ''">AND grade = #{grade}</if>
+            <if test="difficulty != null">AND difficulty = #{difficulty}</if>
+            <if test="hasImage != null">AND has_image = #{hasImage}</if>
+            <if test="isPublished != null">AND is_published = #{isPublished}</if>
+            <if test="source != null and source != ''">AND source = #{source}</if>
+            <if test="content != null and content != ''">
+                AND content LIKE CONCAT('%', #{content}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
