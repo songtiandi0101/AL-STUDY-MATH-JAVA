@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/math/knowledgePoint")
+@RequestMapping("/questions/knowledgePoint")
 public class MathKnowledgePointController {
 
     @Resource
