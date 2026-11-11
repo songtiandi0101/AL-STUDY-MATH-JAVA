@@ -22,6 +22,7 @@ public class MathQuestionController {
     @PostMapping("/add")
     public String add(@RequestBody MathQuestion mathQuestion) {
         try {
+
             int rows = mathQuestionService.addQuestion(mathQuestion);
             return rows > 0 ? "success" : "fail";
         } catch (RuntimeException e) {
@@ -44,7 +45,9 @@ public class MathQuestionController {
     @PutMapping("/update")
     public String update(@RequestBody MathQuestion mathQuestion) {
         try {
+            System.out.println(mathQuestion.getKpIds());
             int rows = mathQuestionService.updateQuestion(mathQuestion);
+
             return rows > 0 ? "success" : "fail";
         } catch (RuntimeException e) {
             return e.getMessage();
