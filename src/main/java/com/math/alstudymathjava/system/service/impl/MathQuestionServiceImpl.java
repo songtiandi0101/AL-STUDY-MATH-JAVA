@@ -64,7 +64,6 @@ public class MathQuestionServiceImpl implements MathQuestionService {
         if (mathQuestion.getKpIds() != null && !mathQuestion.getKpIds().isEmpty()) {
             relationMapper.batchInsert(questionId, mathQuestion.getKpIds());
         }
-
         return rows;
     }
 
@@ -118,9 +117,6 @@ public class MathQuestionServiceImpl implements MathQuestionService {
         // 3. 覆盖更新知识点关联：先删后插
         relationMapper.deleteByQuestionId(questionId);
         if (mathQuestion.getKpIds() != null && !mathQuestion.getKpIds().isEmpty()) {
-            System.out.println("ssssssssss");
-            System.out.println(mathQuestion.getKpIds());
-            System.out.println(questionId);
             relationMapper.batchInsert(questionId, mathQuestion.getKpIds());
         }
 

@@ -14,7 +14,7 @@
     </sql>
 
     <!-- 批量插入题目-知识点关联 -->
-    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="batchInsert" keyProperty="id">
         INSERT INTO math_question_kp_relation (question_id,kp_id)
         VALUES
         <foreach collection="kpIds" item="kpId" separator=",">

@@ -54,10 +54,11 @@
                 #{analysis},
                 #{source},
                 #{isPublished},
-                #{createTime},
-                #{updateTime}
+                NOW(),
+                NOW()
             )
     </insert>
+
 
     <!-- 更新题目 -->
     <update id="update">
