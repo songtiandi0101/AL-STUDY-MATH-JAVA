@@ -11,7 +11,7 @@
  Target Server Version : 80046 (8.0.46)
  File Encoding         : 65001
 
- Date: 10/11/2026 18:28:35
+ Date: 17/11/2026 18:29:56
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `sys_menu`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -47,5 +47,7 @@ INSERT INTO `sys_menu` VALUES (9, 0, '数学题库', '/questions', '', 0, 1, 1, 
 INSERT INTO `sys_menu` VALUES (10, 9, '习题导入', '/questions/import', '', 0, 1, 2, 0, '2026-11-03 09:16:58', '2026-11-03 09:16:58');
 INSERT INTO `sys_menu` VALUES (13, 9, '习题管理', '/questions/question', '', 0, 1, 2, 0, '2026-11-03 18:05:01', '2026-11-03 18:05:01');
 INSERT INTO `sys_menu` VALUES (14, 9, '知识点管理', '/questions/knowledgePoint', '', 0, 1, 2, 0, '2026-11-05 16:30:53', '2026-11-05 16:30:53');
+INSERT INTO `sys_menu` VALUES (15, 0, '图形管理', '/graph', '', 0, 1, 1, 0, '2026-11-17 16:31:46', '2026-11-17 16:31:46');
+INSERT INTO `sys_menu` VALUES (16, 15, '图形生成', '/graph/add', '', 0, 1, 2, 0, '2026-11-17 18:17:25', '2026-11-17 18:17:25');
 
 SET FOREIGN_KEY_CHECKS = 1;
